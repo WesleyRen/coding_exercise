@@ -15,7 +15,7 @@ import javax.mail.internet.MimeMessage;
 
 public class EmailUtil {
 
-    public static final String SMTP_SERVER = "smtp-gw1.wal-mart.com";
+    public static final String SMTP_SERVER = "<your_smtp_server>";
     public static final String SMTP_SENDPARTIAL = "true";
     private Session session;
     private List<MimeMessage> messages = new ArrayList<MimeMessage>();
@@ -93,9 +93,10 @@ public class EmailUtil {
     public static void main(String[] args) {
 
         System.out.println("SimpleEmail Start");
-        if (args.length < 5) {
+        if (args.length < 7) {
             System.out.println("Please run this with folllowing arguments:");
-            System.out.println("<from_email>, <from_name>, <to_emails>, <subject>, <message_body>");
+            System.out.println(
+                    "<from_email>, <from_name>, <to_emails>, <subject>, <message_body>, <smtp_server>, <smtp_server_port>");
             throw new IllegalArgumentException();
         }
 
@@ -104,8 +105,10 @@ public class EmailUtil {
         List<String> recipients = Arrays.asList(args[2].split(","));
         String subject = args[3];
         String body = args[4];
+        String smtpServer = args[5];
+        int port = Integer.parseInt(args[6]);
 
-        EmailUtil emailUtil = new EmailUtil();
+        EmailUtil emailUtil = new EmailUtil(smtpServer, port);
         emailUtil.addMessage(from, fromName, recipients, subject, body);
         emailUtil.sendMessage();
 
