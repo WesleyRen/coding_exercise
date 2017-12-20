@@ -52,9 +52,8 @@ public class EmailUtilTest {
         assertThat(email.getHeaderNames(), hasItem("Subject"));
         assertTrue(email.getHeaderValue("From").contains(from));
         assertTrue(email.getHeaderValue("From").contains(fromName));
-        assertThat(email.getHeaderValues("To"), hasSize(2));
-        assertThat(email.getHeaderValues("To").get(0), is(recipients.get(0)));
-        assertThat(email.getHeaderValues("To").get(1), is(recipients.get(1)));
+        assertTrue(email.getHeaderValue("To").contains(recipients.get(0)));
+        assertTrue(email.getHeaderValue("To").contains(recipients.get(1)));
     }
 
     @Test
